@@ -1,5 +1,6 @@
 package com.tata.com.tata.users
 
+import net.bytebuddy.implementation.bytecode.Throw
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -51,7 +52,7 @@ class UsersApi {
     @PutMapping
     fun modifyUser(@RequestBody userModify: UserModify): String {
         if (userModify.email == null) {
-            return "Invalid request. Please provide email id."
+            throw Exception("Invalid request. Please provide email id.")
         }
 
         val userEntity = usersRepository.findByEmail(userModify.email)
@@ -65,10 +66,10 @@ class UsersApi {
                 userEntity.password = userModify.newPassword
                 userEntity.password = bCryptPasswordEncoder.encode(userEntity.password)
             } else {
-                return "Incorrect current password."
+                throw Exception("Incorrect current password.")
             }
         } else {
-            return "Incorrect request. Please provide both old and new passwords to change password."
+            throw Exception("Incorrect request. Please provide both old and new passwords to change password.")
         }
         if (userModify.name != null) {
             userEntity.name = userModify.name
