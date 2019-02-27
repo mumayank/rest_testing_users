@@ -1,4 +1,4 @@
-package com.tata.com.tata.unauth;
+package com.tata.com.tata.users;
 
 public class UserSignIn {
     private String email;

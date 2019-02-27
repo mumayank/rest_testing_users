@@ -1,6 +1,11 @@
 package com.tata.com.tata
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
+import org.springframework.core.env.Environment
+
 class Constants {
+
     companion object {
 
         private val oneSecond = 1000.toLong()
@@ -14,6 +19,9 @@ class Constants {
         val tokenPrefix = "Bearer "
         val headerString = "Authorization"
         val signUpUrl = "/users"
-        val tokenSecret = "QWEDSaskdf842#$%"
+
+        fun getTokenSecret(applicationContext: ApplicationContext): String {
+            return applicationContext.environment.getProperty("tokenSecret") ?: ""
+        }
     }
 }
